@@ -1,51 +1,30 @@
-// import { API_URL } from "../utils/api";
-// import { type Donation } from "@/utils/types";
-import { Paper, Text, Stack, Group, Title, Card } from "@mantine/core";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Form from "./form"; // Assuming Form is in a separate file
+
+// ... (other imports)
 
 export default function Donation() {
+  const [donationData, setDonationData] = useState<any>(null); // You should define a type for your data
+
+  useEffect(() => {
+    axios
+      .get("https://donation-server-production.up.railway.app/donation")
+      .then((response) => {
+        setDonationData(response.data); // Assuming your API returns an object with the data
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
-    <Card withBorder shadow="xs" bg="gray.3">
-      <Group mb={20}>
-        <Title order={1} color="gray">
-          Total
-        </Title>
-        <Title order={1} variant="gradient">
-          10000
-        </Title>
-        <Title order={1} color="gray">
-          THB
-        </Title>
-      </Group>
-      <Stack>
-        <Paper shadow="xs" p="md">
-          <Group>
-            <Text>Tom</Text>
-            <Text>Sawyer</Text>
-            <Text>tom_sawyer@gmail.com</Text>
-            <Text>10000</Text>
-            <Text>{dayjs("2023-08-26 06:17:51").format("D-MMM HH:mm:ss")}</Text>
-          </Group>
-        </Paper>
-        <Paper shadow="xs" p="md">
-          <Group>
-            <Text>Tom</Text>
-            <Text>Sawyer</Text>
-            <Text>tom_sawyer@gmail.com</Text>
-            <Text>10000</Text>
-            <Text>{dayjs("2023-08-26 06:17:51").format("D-MMM HH:mm:ss")}</Text>
-          </Group>
-        </Paper>
-        <Paper shadow="xs" p="md">
-          <Group>
-            <Text>Tom</Text>
-            <Text>Sawyer</Text>
-            <Text>tom_sawyer@gmail.com</Text>
-            <Text>10000</Text>
-            <Text>{dayjs("2023-08-26 06:17:51").format("D-MMM HH:mm:ss")}</Text>
-          </Group>
-        </Paper>
-      </Stack>
-    </Card>
+    // ... (rest of the component)
+    <Form
+      firstName={donationData?.firstName || ""}
+      lastName={donationData?.lastName || ""}
+      email={donationData?.email || ""}
+      donationAmount={donationData?.donationAmount || ""}
+    />
   );
 }

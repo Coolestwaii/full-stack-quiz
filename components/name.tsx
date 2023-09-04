@@ -1,8 +1,8 @@
 import { Text } from "@mantine/core";
 export default function Name() {
   return (
-    <Text ta="right" color="gray">
-      Add Your Name Here
+    <Text ta="right" className="text-pink-500 text-center">
+      Patrasorn Khantipongse
     </Text>
   );
 }
